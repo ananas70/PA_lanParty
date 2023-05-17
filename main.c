@@ -83,41 +83,6 @@ void delete_min_from_team(Team **head, float min_points){
     }
 }
 
-/*void add_Player_At_Beginning(Player **head, int points, char* firstName, char* secondName)
-{
-	Player* newNode = (Player *)malloc(sizeof(Player));
-	//newNode->val = v;
-    newNode->points=points;
-    newNode->firstName=(char *) malloc((strlen(firstName)+1)*sizeof(char));
-    newNode->secondName=(char *) malloc((strlen(firstName)+1)*sizeof(char));
-    strcpy(newNode->firstName,firstName);
-    strcpy(newNode->secondName,secondName);
-
-	newNode->player_next = *head;
-	*head = newNode;
-}
-*/
-
-/*void add_Player_At_End(Player **head, int points, char* firstName, char* secondName)
-{
-	Player *aux=*head;
-	Player* newNode = (Player *)malloc(sizeof(Player)); 
-	//newNode->val = v; 
-    newNode->points=points;
-    strcpy(newNode->firstName,firstName);
-    strcpy(newNode->secondName,secondName);
-
-
-	if (*head == NULL) add_Player_At_Beginning(head,points,firstName,secondName);
-	else{  
-		while (aux->player_next!=NULL) aux = aux->player_next;
-		aux->player_next = newNode;  
-		newNode->player_next = NULL; 
-	}
-}
-*/
-
-
 void delete_list(Team **head_team){
     //eliberarea memoriei
     //eliberezi intai copiii si dupa aia blocul cel mare
