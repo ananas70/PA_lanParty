@@ -18,7 +18,7 @@ struct team
         char *team_name;
         struct team *team_next;
         Player *head_of_players;
-        float team_points; // punctajul de echipa
+        float team_points; // punctajul de echipaa
 
     };
 typedef struct team Team;
