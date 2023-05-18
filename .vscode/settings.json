@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "team.h": "c",
+        "stdio.h": "c"
+    }
+}

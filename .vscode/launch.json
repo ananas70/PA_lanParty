@@ -1,0 +1,15 @@
+{
+    "configurations": [
+    {
+        "name": "(Windows) Launch",
+        "type": "cppvsdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/test.exe",
+        "args": ["${workspaceFolder}/date/t1/c.in", "${workspaceFolder}/date/t1/d.in", "${workspaceFolder}/date/t1/r_out"],
+        "stopAtEntry": true,
+        "cwd": "${fileDirname}",
+        "environment": [],
+        "console": "externalTerminal"
+    }
+    ]
+}

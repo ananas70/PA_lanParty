@@ -1,3 +1,6 @@
+#ifndef TEAM_H
+#define TEAM_H
+
 #include<stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,7 +10,6 @@ struct player
         char* firstName;
         char* secondName;
         int points;
-        //struct player *player_next;
     };
 typedef struct player Player;
 struct team
@@ -30,4 +32,4 @@ Team* create_aux_team(Team * head_team);  //copiaza head_team intr-o variabila a
 void print_teams(Team* head_team, FILE *r_out);    //afiseaza numele echipelor
 void create_team_points(Team *head_team);
 
-
+#endif // TEAM_H

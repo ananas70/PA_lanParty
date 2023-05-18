@@ -1,5 +1,7 @@
 #include "team.h"
 #include "files.h"
+#include "stive.h"
+#include "cozi.h"
 
 int main(int argc, char *argv[]){
     FILE *c_in, *d_in, *r_out;
@@ -31,17 +33,17 @@ int main(int argc, char *argv[]){
     }
     //TASK 1
     //afisarea numelor echipelor in ordinea in care au intrat in fisierul r.out (adica ordinea inversa din fisierul de intrare)
-    if(task[0]==1 && task[1]==0)
+    if(task[1]==0)
         print_teams(head_team, r_out);
     
     //TASK 2
     else 
-    if(task[0]==1 && task[1]==1)
     {
         //aflam N - nr maxim de echipe ca putere a lui 2
-        int N=1;
+        //retinem Nr_rounds pt task-ul 3
+        int N=1,Nr_rounds=0;
         while(N*2<nr_teams)
-            N*=2;
+            N*=2, Nr_rounds++;
         //construim punctajul de echipa pt fiecare echipa
         create_team_points(head_team);
         while(nr_teams>N && head_team)  //stergerea
@@ -50,8 +52,25 @@ int main(int argc, char *argv[]){
             delete_min_from_team((&head_team),min_points);
             nr_teams--;
         }
-        //afisarea echipelor
-        print_teams(head_team, r_out);
+
+        if(task[2]==0)
+            //afisarea echipelor
+            print_teams(head_team, r_out);
+        else 
+        {   fprintf(r_out,"\n"); //trebuie un endline dupa echipe
+            //TASK 3
+            int k=1;
+            while(k<=Nr_rounds)
+            {
+                //cream coada cu meciurile
+                Queue *q = create_empty_Queue();
+                create_match_queue(q,head_team);
+                fprintf(r_out, "--- ROUND NO:%d\n",k);
+                print_queue(q,r_out);
+                k++;
+
+            }
+        }
     }
     delete_list(&head_team);
     close_files(&c_in, &d_in, &r_out);

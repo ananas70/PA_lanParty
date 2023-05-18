@@ -72,6 +72,7 @@ void delete_list(Team **head_team)
     
     *head_team=NULL;
 }
+
 void dynamic_allocation_test(void *p)
 {
     if(p==NULL){
@@ -100,7 +101,8 @@ void create_Players(Team **head_team, FILE *d_in)
 
 void print_teams(Team* head_team, FILE *r_out)   //afiseaza numele echipelor
 {
-     while(head_team!=NULL){
+     while(head_team!=NULL)
+     {
         fprintf(r_out,"%s\n",head_team->team_name); 
         head_team=head_team->team_next;
     }
