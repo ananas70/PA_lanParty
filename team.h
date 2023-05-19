@@ -29,7 +29,7 @@ void delete_list(Team **head_team);
 void dynamic_allocation_test(void *p);
 void create_Players(Team **head_team, FILE *d_in);
 Team* create_aux_team(Team * head_team);  //copiaza head_team intr-o variabila auxiliara alocata dinamic
-void print_teams(Team* head_team, FILE *r_out);    //afiseaza numele echipelor
+void print_teams(Team* head_team, FILE **r_out);   //afiseaza numele echipelor
 void create_team_points(Team *head_team);
 
 #endif // TEAM_H

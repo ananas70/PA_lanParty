@@ -74,15 +74,30 @@ void create_match_queue(Queue *q, Team *head_team)
 }
 
 void print_queue(Queue *q, FILE* r_out)
-{
-    Team *t1 = (Team *)malloc(sizeof(Team));
+{  	Team *t1 = (Team *)malloc(sizeof(Team));
 	Team *t2 = (Team *)malloc(sizeof(Team));
-    while(!isEmpty_Q(q))
+	Meci *aux= (Meci *)malloc(sizeof(Meci));
+	aux=q->front;
+    while(aux!=NULL)
     {
-        deQueue(q, &t1, &t2);
+		t1 = aux->team1;
+		t2 = aux->team2;
+        //deQueue(q, &t1, &t2);
 		//stergem endline de la final
-		t1->team_name[strlen(t1->team_name)-1]='\0';
-		t2->team_name[strlen(t2->team_name)-1]='\0';
-        fprintf(r_out, "%s\t\t\t\t%s\n", t1->team_name, t2->team_name);
-    }
+		//t1->team_name[strlen(t1->team_name)-1]='\0';
+		//t2->team_name[strlen(t2->team_name)-1]='\0';
+		//Afisarea cu spatii si cratima
+		//pe o linie sunt 67 de caractere
+		//cratima e pe pozitia 33
+		int nr_spaces = 67 - (strlen(t1->team_name) + strlen(t2->team_name)); // -1 de la cratima  
+        int poz_cratima=strlen((t1->team_name));
+		fprintf(r_out,"%s",t1->team_name);
+		for(int j=0;j<nr_spaces;j++,poz_cratima++)
+		{
+			if(poz_cratima == 33)fprintf(r_out,"%c",'-');
+			else fprintf(r_out,"%c",' ');
+    	}
+		fprintf(r_out,"%s\n",t2->team_name);
+		aux=aux->next;
+	}
 }

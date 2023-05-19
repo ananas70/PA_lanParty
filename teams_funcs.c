@@ -99,11 +99,11 @@ void create_Players(Team **head_team, FILE *d_in)
             getc(d_in);
 }}
 
-void print_teams(Team* head_team, FILE *r_out)   //afiseaza numele echipelor
+void print_teams(Team* head_team, FILE **r_out)   //afiseaza numele echipelor
 {
      while(head_team!=NULL)
      {
-        fprintf(r_out,"%s\n",head_team->team_name); 
+        fprintf(*r_out,"%s\n",head_team->team_name); 
         head_team=head_team->team_next;
     }
 }
