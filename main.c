@@ -2,10 +2,30 @@
 #include "files.h"
 #include "stive.h"
 #include "cozi.h"
+#include "tree.h"
 
 int main(int argc, char *argv[]){
     FILE *c_in, *d_in, *r_out;
     open_files(&c_in, &d_in, &r_out, argc, argv);   //deschiderea fisierelor
+    // c_in=fopen("date/t10/c.in","r");
+    // if(c_in==NULL)
+    // {
+    //     printf("eroare fisiere");
+    //     exit(1);
+    // }
+    // d_in=fopen("date/t10/d.in","r");
+    // if(d_in==NULL)
+    // {
+    //     printf("eroare fisiere");
+    //     exit(1);
+    // }
+    // r_out=fopen("r_out","w");
+    // if(r_out==NULL)
+    // {
+    //     printf("eroare fisiere");
+    //     exit(1);
+    // }
+
     int nr_teams;
     //Intai citim ce task trebuie sa facem (din c.in ex: 1 0 0 0 0)
     int task[4];
@@ -66,6 +86,7 @@ int main(int argc, char *argv[]){
         //Cream coada cu meciurile
         Queue *q = create_empty_Queue();
         create_match_queue(q,head_team);
+        Node *root = (Node *)malloc(sizeof(Node)); //pt TASK 4
         while(k<=Nr_rounds)
         {
             //Afisam meciurile din runda
@@ -78,6 +99,11 @@ int main(int argc, char *argv[]){
             winners_stack=NULL;
             losers_stack=NULL;
             create_stacks(q,&winners_stack,&losers_stack); //atentie ca goleste coada
+            //TASK 4
+            if(k == Nr_rounds-3)
+            {
+            root = create_last_8_tree(winners_stack);
+            }
             //Golim stiva de invinsi
             deleteStack(&losers_stack);
             //Cream coada de meciuri din runda urmatoare
@@ -87,6 +113,12 @@ int main(int argc, char *argv[]){
             print_Stack(winners_stack, r_out);
             k++;
         }
+        if(task[3]==1)
+        {
+            fprintf(r_out,"\nTOP 8 TEAMS:\n");
+            DRS(root,r_out);
+        }
+
     }
     delete_list(&head_team);
     close_files(&c_in, &d_in, &r_out);

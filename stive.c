@@ -22,7 +22,7 @@ void push(Stack*** top, Team* team)
 
 Team* pop(Stack** top) 
 {
-	if (isEmpty_stack(*top)) return NULL;
+	if (isEmpty_stack(*top)) {printf("stiva goala in pop"); exit(1);}
 	Stack *temp=(*top); 		
 	Team* aux=temp->team;	
 	*top=(*top)->next;      		
