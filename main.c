@@ -2,33 +2,35 @@
 #include "files.h"
 #include "stive.h"
 #include "cozi.h"
-#include "tree.h"
+#include "BST.h"
+#include "AVL.h"
 
-int main(int argc, char *argv[]){
+
+int main(){
     FILE *c_in, *d_in, *r_out;
-    open_files(&c_in, &d_in, &r_out, argc, argv);   //deschiderea fisierelor
-    // c_in=fopen("date/t10/c.in","r");
-    // if(c_in==NULL)
-    // {
-    //     printf("eroare fisiere");
-    //     exit(1);
-    // }
-    // d_in=fopen("date/t10/d.in","r");
-    // if(d_in==NULL)
-    // {
-    //     printf("eroare fisiere");
-    //     exit(1);
-    // }
-    // r_out=fopen("r_out","w");
-    // if(r_out==NULL)
-    // {
-    //     printf("eroare fisiere");
-    //     exit(1);
-    // }
+    // open_files(&c_in, &d_in, &r_out, argc, argv);   //deschiderea fisierelor
+    c_in=fopen("date/t13/c.in","r");
+    if(c_in==NULL)
+    {
+        printf("eroare fisiere");
+        exit(1);
+    }
+    d_in=fopen("date/t13/d.in","r");
+    if(d_in==NULL)
+    {
+        printf("eroare fisiere");
+        exit(1);
+    }
+    r_out=fopen("r_out","w");
+    if(r_out==NULL)
+    {
+        printf("eroare fisiere");
+        exit(1);
+    }
 
     int nr_teams;
     //Intai citim ce task trebuie sa facem (din c.in ex: 1 0 0 0 0)
-    int task[4];
+    int task[5];
     for(int i=0;i<5;i++)
         fscanf(c_in,"%d",&task[i]);
     //Citim din fisierul cu echipele
@@ -86,7 +88,8 @@ int main(int argc, char *argv[]){
         //Cream coada cu meciurile
         Queue *q = create_empty_Queue();
         create_match_queue(q,head_team);
-        Node *root = (Node *)malloc(sizeof(Node)); //pt TASK 4
+        Node *BST_root = (Node *)malloc(sizeof(Node)); //pt TASK 4
+        AVL_Node *AVL_root = (AVL_Node *)malloc(sizeof(AVL_Node)); //pt TASK 5
         while(k<=Nr_rounds)
         {
             //Afisam meciurile din runda
@@ -99,10 +102,11 @@ int main(int argc, char *argv[]){
             winners_stack=NULL;
             losers_stack=NULL;
             create_stacks(q,&winners_stack,&losers_stack); //atentie ca goleste coada
-            //TASK 4
+            //TASKS 4 & 5
             if(k == Nr_rounds-3)
             {
-            root = create_last_8_tree(winners_stack);
+            BST_root = create_last_8_BST_tree(winners_stack);
+            AVL_root = create_last_8_AVL_tree(winners_stack);
             }
             //Golim stiva de invinsi
             deleteStack(&losers_stack);
@@ -116,7 +120,11 @@ int main(int argc, char *argv[]){
         if(task[3]==1)
         {
             fprintf(r_out,"\nTOP 8 TEAMS:\n");
-            DRS(root,r_out);
+            DRS(BST_root,r_out);
+        }
+        if(task[4]==1)
+        {   fprintf(r_out,"\nTHE LEVEL 2 TEAMS ARE:");
+            level_order_traversal(AVL_root, r_out);
         }
 
     }
