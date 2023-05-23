@@ -7,7 +7,7 @@ void init_tree(Node **root)
 }
 
 Node* createNode(char *teamName, float points) 
-{
+{   
     Node* newNode = (Node*)malloc(sizeof(Node));
     dynamic_allocation_test(newNode);
     newNode->teamName = (char *)malloc((strlen(teamName)+1)*sizeof(char));
@@ -37,15 +37,17 @@ Node* insert(Node* node, char *teamName, float points)
     return node;    //pointerul se intoarce nemodificat pe acest return
 }
 
-void DRS (Node* root, FILE* r_out)
-{   if(root)
+void DRS (Node* root, FILE* r_out, AVL_Node **avl_root)
+{
+    if(root)
     {
-        DRS(root->right, r_out);
+        DRS(root->right, r_out, avl_root);
         fprintf(r_out, "%s",root->teamName);
+        (*avl_root) = AVL_insert(*avl_root,root->teamName,root->points);
         for(int i=1; i<=34-strlen(root->teamName); i++)
 			fprintf(r_out, "%c", ' ');
 		fprintf(r_out, "%c  %.2f\n", '-',root->points);
-        DRS(root->left,r_out);
+        DRS(root->left,r_out, avl_root);
     }
 }
 

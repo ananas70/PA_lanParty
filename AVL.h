@@ -22,11 +22,10 @@ AVL_Node* leftRotation(AVL_Node* z);
 AVL_Node* LRRotation(AVL_Node* Z);
 AVL_Node* RLRotation(AVL_Node*Z);
 AVL_Node* AVL_insert(AVL_Node* Node, char *teamName, float points);
-void print_level(AVL_Node* root, int level, FILE *r_out);
+void print_level(AVL_Node* root,int level, int current_level, FILE *r_out);
 void level_order_traversal(AVL_Node* root, FILE *r_out);
-AVL_Node* create_last_8_AVL_tree(Stack* winners_stack);
-
-
+// AVL_Node* create_last_8_AVL_tree(Stack* winners_stack);
+void printAVLTree(AVL_Node* root, FILE* r_out);
 
 
 #endif //AVL_H

@@ -6,27 +6,27 @@
 #include "AVL.h"
 
 
-int main(){
+int main(int argc, char *argv[]){
     FILE *c_in, *d_in, *r_out;
-    // open_files(&c_in, &d_in, &r_out, argc, argv);   //deschiderea fisierelor
-    c_in=fopen("date/t13/c.in","r");
-    if(c_in==NULL)
-    {
-        printf("eroare fisiere");
-        exit(1);
-    }
-    d_in=fopen("date/t13/d.in","r");
-    if(d_in==NULL)
-    {
-        printf("eroare fisiere");
-        exit(1);
-    }
-    r_out=fopen("r_out","w");
-    if(r_out==NULL)
-    {
-        printf("eroare fisiere");
-        exit(1);
-    }
+    open_files(&c_in, &d_in, &r_out, argc, argv);   //deschiderea fisierelor
+    // c_in=fopen("date/t13/c.in","r");
+    // if(c_in==NULL)
+    // {
+    //     printf("eroare fisiere");
+    //     exit(1);
+    // }
+    // d_in=fopen("date/t13/d.in","r");
+    // if(d_in==NULL)
+    // {
+    //     printf("eroare fisiere");
+    //     exit(1);
+    // }
+    // r_out=fopen("r_out","w");
+    // if(r_out==NULL)
+    // {
+    //     printf("eroare fisiere");
+    //     exit(1);
+    // }
 
     int nr_teams;
     //Intai citim ce task trebuie sa facem (din c.in ex: 1 0 0 0 0)
@@ -90,6 +90,7 @@ int main(){
         create_match_queue(q,head_team);
         Node *BST_root = (Node *)malloc(sizeof(Node)); //pt TASK 4
         AVL_Node *AVL_root = (AVL_Node *)malloc(sizeof(AVL_Node)); //pt TASK 5
+        AVL_root=NULL;
         while(k<=Nr_rounds)
         {
             //Afisam meciurile din runda
@@ -106,7 +107,7 @@ int main(){
             if(k == Nr_rounds-3)
             {
             BST_root = create_last_8_BST_tree(winners_stack);
-            AVL_root = create_last_8_AVL_tree(winners_stack);
+            // AVL_root = create_last_8_AVL_tree(winners_stack);
             }
             //Golim stiva de invinsi
             deleteStack(&losers_stack);
@@ -120,11 +121,15 @@ int main(){
         if(task[3]==1)
         {
             fprintf(r_out,"\nTOP 8 TEAMS:\n");
-            DRS(BST_root,r_out);
+            DRS(BST_root,r_out, &AVL_root);
         }
         if(task[4]==1)
         {   fprintf(r_out,"\nTHE LEVEL 2 TEAMS ARE:");
             level_order_traversal(AVL_root, r_out);
+            //test
+            // fprintf(r_out,"\n");
+            // printAVLTree(AVL_root,r_out);
+            //test
         }
 
     }

@@ -2,6 +2,7 @@
     "files.associations": {
         "team.h": "c",
         "stdio.h": "c",
-        "AVL.C": "cpp"
+        "AVL.C": "cpp",
+        "avl.h": "c"
     }
 }

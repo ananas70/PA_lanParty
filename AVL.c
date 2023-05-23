@@ -14,7 +14,7 @@ AVL_Node* create_AVL_Node(char *teamName, float points)
     dynamic_allocation_test(newNode->teamName);
     strcpy(newNode->teamName, teamName);
     newNode->points = points;
-    // newNode->height = 0; //adaugare ca frunza
+    newNode->height = 0; //adaugare ca frunza
     newNode->left = newNode->right = NULL;
     return newNode;
 }
@@ -26,17 +26,17 @@ int AVL_Node_height(AVL_Node *root)
         return -1;
     hs = AVL_Node_height(root->left);
     hd = AVL_Node_height(root->right);
-    return 1 + ((hs > hd) ? hs:hd); 
+    return 1 + max(hs,hd); 
 }
 
 AVL_Node *rightRotation(AVL_Node *z) 
 {   
     //test
-    if(z==NULL || z->left ==NULL){printf("ups\n");return z;}
+    // if(z==NULL || z->left ==NULL){printf("ups\n");return z;}
     //test
 	AVL_Node *y = z->left;
 	AVL_Node *T3 = y->right;	
-    if(y->right == NULL){printf("ups\n");return z;}
+    // if(y->right == NULL){printf("ups\n");return z;}
 	y->right = z;
 	z->left = T3;
     z->height = 1 + max(AVL_Node_height(z->left), AVL_Node_height(z->right));
@@ -92,55 +92,81 @@ AVL_Node* AVL_insert(AVL_Node* Node, char *teamName, float points)
         }
     Node->height = 1 + max(AVL_Node_height(Node->left), AVL_Node_height(Node->right));
     int k = (AVL_Node_height(Node->left)-AVL_Node_height(Node->right));
-    if(k > 1 && ((points < Node->left->points) || (points == Node->left->points && strcmp(teamName, Node->left->teamName)>0)))
-        return rightRotation(Node);
-    if(k < -1 && ((points > Node->right->points) || (points == Node->right->points && strcmp(teamName, Node->right->teamName)<0)))
-        return leftRotation(Node);
-    if(k > 1 && ((points > Node->left->points) || (points == Node->left->points && strcmp(teamName, Node->left->teamName)<0)))
-        return RLRotation(Node);
-    if(k < -1 && ((points < Node->right->points) || (points == Node->right->points && strcmp(teamName, Node->right->teamName)>0)))
-        return LRRotation(Node);
+    if(k>1)return rightRotation(Node);
+    // if(k > 1 && ((points < Node->left->points) || (points == Node->left->points && strcmp(teamName, Node->left->teamName)>0)))
+    //     return rightRotation(Node);
+    // if(k < -1 && ((points > Node->right->points) || (points == Node->right->points && strcmp(teamName, Node->right->teamName)<0)))
+    //     return leftRotation(Node);
+    // if(k > 1 && ((points > Node->left->points) || (points == Node->left->points && strcmp(teamName, Node->left->teamName)<0)))
+    //     return RLRotation(Node);
+    // if(k < -1 && ((points < Node->right->points) || (points == Node->right->points && strcmp(teamName, Node->right->teamName)>0)))
+    //     return LRRotation(Node);
     printf("root = %s\n", Node->teamName);
     return Node;
 }
 
-void print_level(AVL_Node* root, int level, FILE *r_out)
+void print_level(AVL_Node* root, int level,int current_level, FILE *r_out)
 {
-    if(root == NULL) return;
-    if(level == 0) fprintf(r_out,"%s\n",root->teamName);
-    else
-        if(level >= 1)
-        {
-            print_level(root->left, level-1,r_out);
-            print_level(root->right, level-1,r_out);
-        }
-}
+    if(root == NULL)return;
+    else{
+    if(level == current_level) 
+    {
+        fprintf(r_out,"%s\n",root->teamName);
+        // return;
+    }      
+   else 
+   {print_level(root->right, level,current_level+1,r_out);
+    print_level(root->left, level, current_level+1,r_out);
+   }
+}}
 
 void level_order_traversal(AVL_Node* root, FILE *r_out)
 {    int h = AVL_Node_height(root);
-    printf("inaltimme  (%s) = %d\n",root->teamName, h);
+    // printf("inaltimme  (%s) = %d\n",root->teamName, h);
      fprintf(r_out,"\n");
-    // for(int i=0;i<=h;i++)
-        print_level(root, 3, r_out);
+        print_level(root, 2,0, r_out);
     
 }
 
-AVL_Node* create_last_8_AVL_tree(Stack* winners_stack)
-{
-    if(isEmpty_stack(winners_stack))
-    {
-        printf("stiva winner e goala\n");
-        return NULL;
+// void DRS_AVL(AVL_Node* root, FILE* r_out)
+// {
+//     if(root)
+//     {
+//         DRS_AVL(root->right, r_out);
+//         if()
+//         fprintf(r_out, "%s",root->teamName);
+//         DRS(root->left,r_out);
+//     }
+// }
+
+
+
+
+// AVL_Node* create_last_8_AVL_tree(Node* added_node)
+// {
+//     AVL_Node *root = create_AVL_Node(added_node->teamName, added_node->points);
+//     printf("root = %s\n",root->teamName);
+//     winners_stack=winners_stack->next;
+//     while(!isEmpty_stack(winners_stack))
+//     {
+//         printf("bagam din stiva : %s\n",winners_stack->team->team_name);
+//     Team* aux = winners_stack->team;
+//     root = AVL_insert(root, aux->team_name, aux->team_points);
+//     winners_stack=winners_stack->next;
+//     }
+//     return root;
+// }
+
+void printAVLTree(AVL_Node* root, FILE* r_out) //RSD
+{   
+    if (root == NULL) {
+        return;
     }
-    AVL_Node *root = create_AVL_Node(winners_stack->team->team_name, winners_stack->team->team_points);
-    printf("root = %s\n",root->teamName);
-    winners_stack=winners_stack->next;
-    while(!isEmpty_stack(winners_stack))
-    {
-        printf("bagam din stiva : %s\n",winners_stack->team->team_name);
-    Team* aux = winners_stack->team;
-    root = AVL_insert(root, aux->team_name, aux->team_points);
-    winners_stack=winners_stack->next;
-    }
-    return root;
+
+    // Print the team name and points of the current node
+    fprintf(r_out,"Team: %s, Points: %.2f", root->teamName, root->points);
+    fprintf(r_out,"\tHeight: %d\n", AVL_Node_height(root));
+    // Recursively print the left and right subtrees
+    printAVLTree(root->left, r_out);
+    printAVLTree(root->right,r_out);
 }
