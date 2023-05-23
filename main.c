@@ -65,10 +65,8 @@ int main(int argc, char *argv[]){
         //Cream coada cu meciurile
         Queue *q = create_empty_Queue();
         create_match_queue(q,head_team);
-        Node *BST_root = (Node *)malloc(sizeof(Node)); //pt TASK 4
-        AVL_Node *AVL_root = (AVL_Node *)malloc(sizeof(AVL_Node)); //pt TASK 5
-        BST_root=NULL;
-        AVL_root=NULL;
+        Node * BST_root=NULL; //pt TASK 4
+        AVL_Node *AVL_root=NULL;//pt TASK 5
         Stack *winners_stack=(Stack *)malloc(sizeof(Stack));
         Stack *losers_stack=(Stack *)malloc(sizeof(Stack));
         winners_stack=NULL;
