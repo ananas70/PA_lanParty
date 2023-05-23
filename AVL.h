@@ -17,15 +17,11 @@ typedef struct avl_node AVL_Node;
 int max(int x, int y);
 AVL_Node* create_AVL_Node(char *teamName, float points);
 int AVL_Node_height(AVL_Node *root);
-AVL_Node *rightRotation(AVL_Node *z); 
-AVL_Node* leftRotation(AVL_Node* z);
-AVL_Node* LRRotation(AVL_Node* Z);
-AVL_Node* RLRotation(AVL_Node*Z);
+AVL_Node* rightRotation(AVL_Node *z); 
 AVL_Node* AVL_insert(AVL_Node* Node, char *teamName, float points);
 void print_level(AVL_Node* root,int level, int current_level, FILE *r_out);
 void level_order_traversal(AVL_Node* root, FILE *r_out);
-// AVL_Node* create_last_8_AVL_tree(Stack* winners_stack);
-void printAVLTree(AVL_Node* root, FILE* r_out);
+void delete_AVL_Tree(AVL_Node* root);
 
 
 #endif //AVL_H

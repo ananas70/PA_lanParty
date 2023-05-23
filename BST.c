@@ -67,3 +67,15 @@ Node* create_last_8_BST_tree(Stack *winners_stack)
     }
     return root;
 }
+
+void delete_BST_Tree(Node* root) 
+{
+    if (root == NULL) 
+        return;
+        
+    delete_BST_Tree(root->left);
+    delete_BST_Tree(root->right);
+
+    free(root->teamName);
+    free(root);
+}

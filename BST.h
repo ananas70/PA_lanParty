@@ -18,6 +18,5 @@ Node* createNode(char *teamName, float points);
 Node* insert(Node* node, char *teamName, float points);
 void DRS (Node* root, FILE* r_out, AVL_Node **avl_root);
 Node* create_last_8_BST_tree(Stack *winners_stack);
-
-
+void delete_BST_Tree(Node* root);
 #endif // TREE_H

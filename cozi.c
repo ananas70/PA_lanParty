@@ -74,21 +74,14 @@ void create_match_queue(Queue *q, Team *head_team)
 }
 
 void print_queue(Queue *q, FILE* r_out)
-{  	Team *t1 = (Team *)malloc(sizeof(Team));
-	Team *t2 = (Team *)malloc(sizeof(Team));
-	Meci *aux= (Meci *)malloc(sizeof(Meci));
-	aux=q->front;
+{  	Team *t1, *t2;
+	Meci *aux=q->front;
     while(aux!=NULL)
     {
 		t1 = aux->team1;
 		t2 = aux->team2;
-        //deQueue(q, &t1, &t2);
-		//stergem endline de la final
-		//t1->team_name[strlen(t1->team_name)-1]='\0';
-		//t2->team_name[strlen(t2->team_name)-1]='\0';
 		//Afisarea cu spatii si cratima
-		//pe o linie sunt 67 de caractere
-		//cratima e pe pozitia 33
+		//pe o linie sunt 67 de caractere, cratima e pe pozitia 33
 		int nr_spaces = 67 - (strlen(t1->team_name) + strlen(t2->team_name)); // -1 de la cratima  
         int poz_cratima=strlen((t1->team_name));
 		fprintf(r_out,"%s",t1->team_name);

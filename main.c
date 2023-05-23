@@ -9,24 +9,6 @@
 int main(int argc, char *argv[]){
     FILE *c_in, *d_in, *r_out;
     open_files(&c_in, &d_in, &r_out, argc, argv);   //deschiderea fisierelor
-    // c_in=fopen("date/t13/c.in","r");
-    // if(c_in==NULL)
-    // {
-    //     printf("eroare fisiere");
-    //     exit(1);
-    // }
-    // d_in=fopen("date/t13/d.in","r");
-    // if(d_in==NULL)
-    // {
-    //     printf("eroare fisiere");
-    //     exit(1);
-    // }
-    // r_out=fopen("r_out","w");
-    // if(r_out==NULL)
-    // {
-    //     printf("eroare fisiere");
-    //     exit(1);
-    // }
 
     int nr_teams;
     //Intai citim ce task trebuie sa facem (din c.in ex: 1 0 0 0 0)
@@ -36,9 +18,7 @@ int main(int argc, char *argv[]){
     //Citim din fisierul cu echipele
     fscanf(d_in,"%d",&nr_teams);
     getc(d_in); 
-    Team *head_team = (Team *) malloc(sizeof(Team));
-    head_team= NULL;
-
+    Team *head_team= NULL;
     for(int i=0;i<nr_teams;i++){
         //alocarea echipei
         int nr_players; char team_name[50]; //buffers
@@ -48,12 +28,9 @@ int main(int argc, char *argv[]){
         team_name[strlen(team_name)-1] = '\0';
         if(team_name[strlen(team_name)-1] == ' ')
             team_name[strlen(team_name)-1] = '\0';
-        //printf("%s\n",team_name);
         getc(d_in);   //citeste endline-ul
         add_Team_At_Beginning(&head_team,nr_players,team_name);
-
         //alocarea jucatorilor
-        head_team->head_of_players=(Player *)malloc(nr_players*sizeof(Player));
         create_Players(&head_team,d_in);
         getc(d_in);
     }
@@ -83,14 +60,19 @@ int main(int argc, char *argv[]){
         print_teams(head_team, &r_out);
         if(task[2]==0)return 0;
         // TASK 3
-        fprintf(r_out,"\n"); //trebuie un endline dupa echipe
+        fprintf(r_out,"\n"); //endline dupa echipe
         int k=1;
         //Cream coada cu meciurile
         Queue *q = create_empty_Queue();
         create_match_queue(q,head_team);
         Node *BST_root = (Node *)malloc(sizeof(Node)); //pt TASK 4
         AVL_Node *AVL_root = (AVL_Node *)malloc(sizeof(AVL_Node)); //pt TASK 5
+        BST_root=NULL;
         AVL_root=NULL;
+        Stack *winners_stack=(Stack *)malloc(sizeof(Stack));
+        Stack *losers_stack=(Stack *)malloc(sizeof(Stack));
+        winners_stack=NULL;
+        losers_stack=NULL;
         while(k<=Nr_rounds)
         {
             //Afisam meciurile din runda
@@ -98,16 +80,11 @@ int main(int argc, char *argv[]){
             print_queue(q,r_out);
             fprintf(r_out,"%c",'\n');
              //Cream stivele
-            Stack *winners_stack=(Stack *)malloc(sizeof(Stack));
-            Stack *losers_stack=(Stack *)malloc(sizeof(Stack));
-            winners_stack=NULL;
-            losers_stack=NULL;
-            create_stacks(q,&winners_stack,&losers_stack); //atentie ca goleste coada
+            create_stacks(q,&winners_stack,&losers_stack); //atentie: goleste coada
             //TASKS 4 & 5
             if(k == Nr_rounds-3)
             {
             BST_root = create_last_8_BST_tree(winners_stack);
-            // AVL_root = create_last_8_AVL_tree(winners_stack);
             }
             //Golim stiva de invinsi
             deleteStack(&losers_stack);
@@ -118,20 +95,23 @@ int main(int argc, char *argv[]){
             print_Stack(winners_stack, r_out);
             k++;
         }
+        deleteQueue(q);
+        q=NULL;
+        deleteStack(&winners_stack);
+        winners_stack=NULL;
         if(task[3]==1)
         {
             fprintf(r_out,"\nTOP 8 TEAMS:\n");
             DRS(BST_root,r_out, &AVL_root);
         }
+        delete_BST_Tree(BST_root);
+        BST_root=NULL;
         if(task[4]==1)
         {   fprintf(r_out,"\nTHE LEVEL 2 TEAMS ARE:");
             level_order_traversal(AVL_root, r_out);
-            //test
-            // fprintf(r_out,"\n");
-            // printAVLTree(AVL_root,r_out);
-            //test
         }
-
+        delete_AVL_Tree(AVL_root);
+        AVL_root=NULL;
     }
     delete_list(&head_team);
     close_files(&c_in, &d_in, &r_out);

@@ -3,6 +3,7 @@
         "team.h": "c",
         "stdio.h": "c",
         "AVL.C": "cpp",
-        "avl.h": "c"
+        "avl.h": "c",
+        "files.h": "c"
     }
 }

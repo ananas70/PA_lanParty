@@ -21,8 +21,7 @@ void push(Stack*** top, Team* team)
 }
 
 Team* pop(Stack** top) 
-{
-	if (isEmpty_stack(*top)) {printf("stiva goala in pop"); exit(1);}
+{	if (isEmpty_stack(*top)) {printf("stiva goala :("); return NULL;}
 	Stack *temp=(*top); 		
 	Team* aux=temp->team;	
 	*top=(*top)->next;      		
@@ -39,13 +38,12 @@ void deleteStack(Stack** top)
 		free(temp);
 }
 
-void create_stacks(Queue *q, Stack **winners_stack, Stack** loosers_stack) //atentie ca goleste coada
+void create_stacks(Queue *q, Stack **winners_stack, Stack** loosers_stack) //atentie: goleste coada
 {	*winners_stack = NULL;
 	*loosers_stack = NULL;
 	while(!isEmpty_Q(q))
 	{
-		Team *team1 =(Team *)malloc(sizeof(Team));
-		Team *team2=(Team *)malloc(sizeof(Team));
+		Team *team1, *team2;
 		deQueue(q,&team2,&team1);
 		if(team1->team_points >= team2->team_points)
 		{	team1->team_points++;

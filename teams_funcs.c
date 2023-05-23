@@ -52,24 +52,23 @@ void delete_min_from_team(Team **head, float min_points)
     }
 }
 
-Team* create_aux_team(Team * head_team){   //copiaza head_team intr-o variabila auxiliara alocata dinamic
-    Team *aux_team=(Team *)malloc(sizeof(Team));
-    dynamic_allocation_test(aux_team);
-    aux_team=head_team;
-    return aux_team;
-}
-
 void delete_list(Team **head_team)
-{
-    //eliberarea memoriei
+{   //eliberarea memoriei
     //eliberezi intai copiii si dupa aia blocul cel mare
-    Team *aux_team;
-    while(*head_team!=NULL){
-        aux_team=(*head_team)->team_next;
-        free(*head_team);
-        *head_team=aux_team;
+    Team *prev = *head_team;
+    while (prev != NULL) 
+    {
+        Team* current = prev->team_next;
+        for (int i = 0; i < prev->num_of_players; i++) {
+            Player* p = prev->head_of_players + i;
+            free(p->firstName);
+            free(p->secondName);
+        }
+        free(prev->head_of_players);
+        free(prev->team_name);
+        free(prev);
+        prev = current;
     }
-    
     *head_team=NULL;
 }
 
