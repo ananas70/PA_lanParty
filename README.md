@@ -1,5 +1,5 @@
 
-## LanParty - sistem automatizat pentru organizarea LAN Party, folosind structuri de date avansate și algoritmi pentru gestionarea echipelor, programarea meciurilor și realizarea clasamentului.
+##   LanParty - sistem automatizat pentru organizarea LAN Party, folosind structuri de date avansate și algoritmi pentru gestionarea echipelor, programarea meciurilor și realizarea clasamentului.
 
 Fiecare echipă (**structura Team**) din fișierul de intrare este inserată într-o listă simplu înlănțuită alocată dinamic. Jucătorii (**structura Player**) sunt alocați dinamic într-un bloc de mărimea *nr_players* * *sizeof(Player)*, în funcția **create_Players**. 
 
